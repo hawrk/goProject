@@ -10,7 +10,6 @@ import (
 	"time"
 )
 
-
 func init() {
 	// check log dir exist
 	if _, err := os.Stat(common.LogPath); os.IsNotExist(err) {
@@ -18,17 +17,20 @@ func init() {
 		_ = os.Chmod(common.LogPath, 0777)
 	}
 	file := "./" + common.LogPath + time.Now().Format("20060102") + ".log"
-	logFile , err := os.OpenFile(file, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0766)
+	logFile, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0766)
 	if err != nil {
 		panic(err)
 	}
-	common.Loger = log.New(logFile, "", log.LstdFlags | log.Lshortfile | log.Ldate|log.Ltime)
+	common.Loger = log.New(logFile, "", log.LstdFlags|log.Lshortfile|log.Ldate|log.Ltime)
 }
-
 
 func main() {
 
-	c , err := redis.Dial("tcp", "127.0.0.1:6379")
+	nowTime := time.Now().UnixNano() / 1e6
+	fmt.Println("nowTime:", nowTime)
+	return
+
+	c, err := redis.Dial("tcp", "127.0.0.1:6379")
 	if err != nil {
 		fmt.Errorf("connect  redis :127.0.0.1:6379 fail")
 		common.Loger.Println("connect  redis :127.0.0.1:6379 fail|err:", err)
@@ -47,4 +49,3 @@ func main() {
 		return
 	}
 }
-
