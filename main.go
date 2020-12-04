@@ -28,7 +28,6 @@ func main() {
 
 	nowTime := time.Now().UnixNano() / 1e6
 	fmt.Println("nowTime:", nowTime)
-	return
 
 	c, err := redis.Dial("tcp", "127.0.0.1:6379")
 	if err != nil {
